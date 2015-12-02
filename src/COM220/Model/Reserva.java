@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author natanmorais
  */
 public class Reserva implements Serializable{
+    int Codigo;
     long dataEntrada, dataSaída;
     double Desconto;
     ArrayList<Quarto> Quartos = new ArrayList<>();
@@ -21,10 +22,18 @@ public class Reserva implements Serializable{
     public Reserva() {
     }
 
-    public Reserva(long dataEntrada, long dataSaída, double Desconto) {
+    public Reserva(int Codigo, long dataEntrada, long dataSaída, double Desconto) {
         this.dataEntrada = dataEntrada;
         this.dataSaída = dataSaída;
         this.Desconto = Desconto;
+    }
+
+    public int getCodigo() {
+        return Codigo;
+    }
+
+    public void setCodigo(int Codigo) {
+        this.Codigo = Codigo;
     }
 
     public long getDataEntrada() {
