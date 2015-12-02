@@ -85,7 +85,7 @@ public class ctrPagamento {
         Calendar dataEnt = null, dataSaí = null;
         dataEnt.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
         dataSaí.setTimeInMillis(p.getReservaEfetuada().getDataSaída());
-        double Preço = p.getReservaEfetuada().getDesconto();
+        double Preço = p.getReservaEfetuada().calcularDesconto();
         for(Quarto q: p.getReservaEfetuada().getQuartos()){
             Preço += q.getPreço();
         }
