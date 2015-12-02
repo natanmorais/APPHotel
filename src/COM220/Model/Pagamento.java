@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package COM220.View;
+package COM220.Model;
 
 import COM220.Utils.Constants;
 /**
