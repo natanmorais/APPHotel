@@ -13,11 +13,13 @@ import java.util.ArrayList;
  *
  * @author natanmorais
  */
-public class Reserva implements Serializable{
+public class Reserva implements Serializable {
+
     int Codigo;
     long dataEntrada, dataSaída;
     double Desconto;
     ArrayList<Quarto> Quartos = new ArrayList<>();
+    Boolean Cancelada = false;
 
     public Reserva() {
     }
@@ -67,6 +69,21 @@ public class Reserva implements Serializable{
     public void setQuartos(ArrayList<Quarto> Quartos) {
         this.Quartos = Quartos;
     }
-    
-    
+
+    public double calcularDesconto() {
+        double percent = this.getDesconto()/100;
+        double Preço = 0;
+        for (Quarto q : Quartos) {
+            Preço += q.getPreço();
+        }
+        return Preço * percent;
+    }
+
+    public Boolean getCancelada() {
+        return Cancelada;
+    }
+
+    public void setCancelada(Boolean Cancelada) {
+        this.Cancelada = Cancelada;
+    }
 }

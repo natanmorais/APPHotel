@@ -5,22 +5,27 @@
  */
 package COM220.Control;
 
+import COM220.Model.Quarto;
 import COM220.Model.Reserva;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  *
  * @author natanmorais
  */
 public class ctrReserva {
-    //Criar atributo para ter o view do Reserva.
-    ArrayList<Reserva> listaReservas = new ArrayList<>();
 
-    public void SalvaReserva() throws Exception{
+    //Criar atributo para ter o view do Reserva.
+
+    ArrayList<Reserva> listaReservas = new ArrayList<>();
+    ctrQuarto controlQ = new ctrQuarto();
+
+    public void SalvaReserva() throws Exception {
         try {
 
             //Gera o arquivo para armazenar o objeto
@@ -48,7 +53,7 @@ public class ctrReserva {
         }
     }
 
-    public void BuscaReservas() throws Exception{
+    public void BuscaReservas() throws Exception {
         try {
 
             //Carrega o arquivo
@@ -68,6 +73,43 @@ public class ctrReserva {
 
             throw e;
 
+        }
+    }
+
+    public ArrayList<Quarto> verificaDisponibilidade(long ini, long fim) throws Exception {
+        BuscaReservas();
+        ArrayList<Quarto> quartosDisp = controlQ.ListarQuartos();
+        ArrayList<Integer> quartosNao = new ArrayList<>();
+        for (Reserva r : listaReservas) {
+            if (ini >= r.getDataEntrada() && ini <= r.getDataSaída() || 
+                    fim >= r.getDataEntrada() && fim <= r.getDataSaída() ||
+                    ini <= r.getDataEntrada() && fim >= r.getDataSaída()) {
+                for(Quarto q: r.getQuartos()){
+                    quartosNao.add(q.getNumero());
+                }
+            }
+        }
+        for (Quarto q : quartosDisp) {
+            for (Integer num : quartosNao) {
+                if (q.getNumero() == num) {
+                    quartosDisp.remove(q);
+                }
+            }
+        }
+        return quartosDisp;
+    }
+    
+    public ArrayList<Reserva> listarTodasReservas() throws Exception{
+        BuscaReservas();
+        return listaReservas;
+    }
+    
+    public void cancelarReserva(int cod) throws Exception{
+        BuscaReservas();
+        for(Reserva r: listaReservas){
+            if(r.getCodigo()==cod){
+                r.setCancelada(true);
+            }
         }
     }
 }
