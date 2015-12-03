@@ -27,7 +27,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jButton1" alignment="0" min="-2" pref="234" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="0" min="-2" pref="234" max="-2" attributes="0"/>
+                  <Component id="btnQuartos" alignment="0" min="-2" pref="234" max="-2" attributes="0"/>
                   <Component id="jButton3" alignment="0" min="-2" pref="234" max="-2" attributes="0"/>
                   <Component id="btnClientes" alignment="0" min="-2" pref="234" max="-2" attributes="0"/>
               </Group>
@@ -43,7 +43,7 @@
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="jButton1" min="-2" pref="63" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" pref="63" max="-2" attributes="0"/>
+              <Component id="btnQuartos" min="-2" pref="63" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Component id="jButton3" min="-2" pref="63" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
@@ -57,10 +57,16 @@
         <Property name="text" type="java.lang.String" value="jButton1"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="btnQuartos">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton1"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Bed.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Quartos"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnQuartosActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>

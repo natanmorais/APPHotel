@@ -78,7 +78,7 @@ public class ctrReserva {
 
     public ArrayList<Quarto> verificaDisponibilidade(long ini, long fim) throws Exception {
         BuscaReservas();
-        ArrayList<Quarto> quartosDisp = controlQ.ListarQuartos();
+        ArrayList<Quarto> quartosDisp = controlQ.listaDeQuartos();
         ArrayList<Integer> quartosNao = new ArrayList<>();
         for (Reserva r : listaReservas) {
             if (ini >= r.getDataEntrada() && ini <= r.getDataSaída() || 

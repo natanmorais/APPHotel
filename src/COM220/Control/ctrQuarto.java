@@ -5,6 +5,7 @@
  */
 package COM220.Control;
 
+import COM220.Model.Cliente;
 import COM220.Model.Quarto;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,8 +20,12 @@ import java.util.ArrayList;
 public class ctrQuarto {
     //Criar atributo para ter o view do Quarto.
     ArrayList<Quarto> listaQuartos = new ArrayList<>();
+    
+    public ctrQuarto(){
+        BuscaQuartos();
+    }
 
-    public void SalvaQuarto() throws Exception{
+    public void SalvaQuarto(){
         try {
 
             //Gera o arquivo para armazenar o objeto
@@ -43,12 +48,10 @@ public class ctrQuarto {
 
         } catch (Exception e) {
 
-            throw e;
-
         }
     }
 
-    public void BuscaQuartos() throws Exception{
+    public void BuscaQuartos(){
         try {
 
             //Carrega o arquivo
@@ -66,17 +69,16 @@ public class ctrQuarto {
 
         } catch (Exception e) {
 
-            throw e;
-
         }
     }
     
-    public ArrayList <Quarto> ListarQuartos() throws Exception {
-        try {
-            BuscaQuartos();
-            return listaQuartos;
-        }catch(Exception e){
-            throw e;
-        }
+    public void AddQuarto(Quarto q){
+        BuscaQuartos();
+        listaQuartos.add(q);
+        SalvaQuarto();
+    }
+    
+    public ArrayList <Quarto> listaDeQuartos() {
+            return listaQuartos;        
     }
 }

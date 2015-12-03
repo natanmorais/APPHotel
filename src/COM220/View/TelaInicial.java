@@ -32,7 +32,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnQuartos = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnClientes = new javax.swing.JButton();
 
@@ -40,7 +40,13 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
-        jButton2.setText("jButton1");
+        btnQuartos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Bed.png"))); // NOI18N
+        btnQuartos.setText("Quartos");
+        btnQuartos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuartosActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("jButton1");
 
@@ -60,7 +66,7 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(361, Short.MAX_VALUE))
@@ -73,7 +79,7 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnQuartos, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
@@ -86,10 +92,14 @@ public class TelaInicial extends javax.swing.JFrame {
        new ClientesView();
     }//GEN-LAST:event_btnClientesActionPerformed
 
+    private void btnQuartosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuartosActionPerformed
+        new QuartosView();
+    }//GEN-LAST:event_btnQuartosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnQuartos;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     // End of variables declaration//GEN-END:variables
 }
