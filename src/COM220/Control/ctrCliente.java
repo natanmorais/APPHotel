@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,9 +20,13 @@ import java.util.ArrayList;
 public class ctrCliente {
 
     //Criar atributo para ter o view do Cliente.
-    ArrayList<Cliente> listaClientes = new ArrayList<>();
+    List<Cliente> listaClientes = new ArrayList<>();
+    
+    public ctrCliente(){
+        BuscaClientes();        
+    }
 
-    public void SalvaCliente() throws Exception{
+    public void SalvaCliente(){
         try {
 
             //Gera o arquivo para armazenar o objeto
@@ -36,20 +41,15 @@ public class ctrCliente {
 
             objGravar.flush();
 
-            objGravar.close();
-
-            arquivoGrav.flush();
+            objGravar.close();            
 
             arquivoGrav.close();
 
         } catch (Exception e) {
-
-            throw e;
-
         }
     }
 
-    public void BuscaClientes() throws Exception{
+    public void BuscaClientes(){
         try {
 
             //Carrega o arquivo
@@ -66,25 +66,26 @@ public class ctrCliente {
             arquivoLeitura.close();
 
         } catch (Exception e) {
-
-            throw e;
-
         }
     }
     
-    public void CadastrarCliente(Cliente c) throws Exception{
+    public void CadastrarCliente(Cliente c){
         BuscaClientes();
         listaClientes.add(c);
         SalvaCliente();
     }
     
-    public Boolean existeCliente(String CPF) throws Exception{
+    public Boolean existeCliente(String CPF){
         BuscaClientes();
         for(Cliente c: listaClientes){
-            if(c.getCPF() == CPF){
+            if(c.getCPF().equals(CPF)){
                 return true;
             }
         }
         return false;
+    }
+    
+    public List<Cliente> listaDeClientes(){
+        return listaClientes;
     }
 }

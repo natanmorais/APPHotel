@@ -14,12 +14,12 @@ import java.io.Serializable;
  */
 public class Cliente implements Serializable{
     String CPF, Nome, Endereço;
-    int Telefone;
+    String Telefone;
 
     public Cliente() {
     }
 
-    public Cliente(String CPF, String Nome, String Endereço, int Telefone) {
+    public Cliente(String CPF, String Nome, String Endereço, String Telefone) {
         this.CPF = CPF;
         this.Nome = Nome;
         this.Endereço = Endereço;
@@ -50,11 +50,11 @@ public class Cliente implements Serializable{
         this.Endereço = Endereço;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return Telefone;
     }
 
-    public void setTelefone(int Telefone) {
+    public void setTelefone(String Telefone) {
         this.Telefone = Telefone;
     }
     
