@@ -5,8 +5,10 @@
  */
 package COM220.Control;
 
+import COM220.Model.Pagamento;
 import COM220.Model.Quarto;
 import COM220.Model.Reserva;
+import COM220.Utils.Constants;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -21,9 +23,9 @@ import java.util.Calendar;
 public class ctrReserva {
 
     //Criar atributo para ter o view do Reserva.
-
     ArrayList<Reserva> listaReservas = new ArrayList<>();
     ctrQuarto controlQ = new ctrQuarto();
+    ctrPagamento controlP = new ctrPagamento();
 
     public void SalvaReserva() throws Exception {
         try {
@@ -81,10 +83,10 @@ public class ctrReserva {
         ArrayList<Quarto> quartosDisp = controlQ.listaDeQuartos();
         ArrayList<Integer> quartosNao = new ArrayList<>();
         for (Reserva r : listaReservas) {
-            if (ini >= r.getDataEntrada() && ini <= r.getDataSaída() || 
-                    fim >= r.getDataEntrada() && fim <= r.getDataSaída() ||
-                    ini <= r.getDataEntrada() && fim >= r.getDataSaída()) {
-                for(Quarto q: r.getQuartos()){
+            if (ini >= r.getDataEntrada() && ini <= r.getDataSaída()
+                    || fim >= r.getDataEntrada() && fim <= r.getDataSaída()
+                    || ini <= r.getDataEntrada() && fim >= r.getDataSaída()) {
+                for (Quarto q : r.getQuartos()) {
                     quartosNao.add(q.getNumero());
                 }
             }
@@ -98,18 +100,76 @@ public class ctrReserva {
         }
         return quartosDisp;
     }
-    
-    public ArrayList<Reserva> listarTodasReservas() throws Exception{
+
+    public ArrayList<Reserva> listarTodasReservas() throws Exception {
         BuscaReservas();
         return listaReservas;
     }
-    
-    public void cancelarReserva(int cod) throws Exception{
+
+    public void cancelarReserva(int cod) throws Exception {
         BuscaReservas();
-        for(Reserva r: listaReservas){
-            if(r.getCodigo()==cod){
+        for (Reserva r : listaReservas) {
+            if (r.getCodigo() == cod) {
                 r.setCancelada(true);
             }
         }
+    }
+
+    public double calculaDesconto(Reserva r) {
+        return r.calcularDesconto();
+    }
+
+    public void fazerReserva(Reserva r) throws Exception {
+        BuscaReservas();
+        listaReservas.add(r);
+        SalvaReserva();
+    }
+
+    public ArrayList<Reserva> relatorioCancelados() throws Exception {
+        ArrayList<Reserva> canc = new ArrayList<>();
+        BuscaReservas();
+        for (Reserva r : listaReservas) {
+            if (r.getCancelada()) {
+                canc.add(r);
+            }
+        }
+        return canc;
+    }
+
+    public ArrayList<Reserva> relatorioNaoPagos() throws Exception {
+        ArrayList<Reserva> naoP = new ArrayList<>();
+        BuscaReservas();
+        for (Pagamento p : controlP.listaPagamentos) {
+            if (p.getSituação() == Constants.NAO_PAGO) {
+                naoP.add(p.getReservaEfetuada());
+            }
+        }
+        return naoP;
+    }
+
+    public ArrayList<Reserva> relatorioASerPagoHoje() throws Exception {
+        ArrayList<Reserva> naoP = new ArrayList<>();
+        Calendar hoje = Calendar.getInstance(), dia = null;
+        BuscaReservas();
+        for (Pagamento p : controlP.listaPagamentos) {
+            if (p.getSituação() == Constants.NAO_PAGO) {
+                dia.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
+                if ((dia.get(Calendar.DAY_OF_YEAR) + 3) == hoje.get(Calendar.DAY_OF_YEAR)) {
+                    naoP.add(p.getReservaEfetuada());
+                }
+            }
+        }
+        return naoP;
+    }
+
+    public ArrayList<Reserva> relatorioPeriodo(long ini, long fim) throws Exception {
+        ArrayList<Reserva> list = new ArrayList<>();
+        BuscaReservas();
+        for (Reserva r : listaReservas) {
+            if (r.getDataEntrada() >= ini && r.getDataEntrada() <= fim) {
+                list.add(r);
+            }
+        }
+        return list;
     }
 }
