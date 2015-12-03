@@ -5,7 +5,6 @@
  */
 package COM220.Control;
 
-import COM220.Model.Cliente;
 import COM220.Model.Quarto;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

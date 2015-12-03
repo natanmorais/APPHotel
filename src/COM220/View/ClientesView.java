@@ -9,9 +9,7 @@ import COM220.Control.ctrCliente;
 import COM220.Model.Cliente;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,7 +28,7 @@ public class ClientesView extends javax.swing.JFrame {
         //define que a janela iniciará centralizado.
         setLocationRelativeTo(null);
 
-        adapter = new ClienteAdapter(controle.listaDeClientes());
+        adapter = new ClienteAdapter(controle);
         tbClientes.setModel(adapter);
         
         setVisible(true);        
@@ -105,15 +103,15 @@ public class ClientesView extends javax.swing.JFrame {
 
     public class ClienteAdapter extends AbstractTableModel {
 
-        private List<Cliente> clientes = new ArrayList<>();
+        private ctrCliente controle;
 
-        public ClienteAdapter(List<Cliente> clientes) {
-            this.clientes = clientes;
+        public ClienteAdapter(ctrCliente controle) {
+            this.controle = controle;
         }
         
         @Override
         public int getRowCount() {
-           return clientes.size();
+           return controle.listaDeClientes().size();
         }
 
         @Override
@@ -123,7 +121,7 @@ public class ClientesView extends javax.swing.JFrame {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Cliente c = this.clientes.get(rowIndex);
+            Cliente c = this.controle.listaDeClientes().get(rowIndex);
             if (columnIndex == 1) {
                 return c.getCPF();
             } else if (columnIndex == 2) {

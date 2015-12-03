@@ -126,7 +126,7 @@ public class AddQuarto extends javax.swing.JFrame {
                         new Quarto(Integer.parseInt(txtNumero.getText()),
                                 Double.parseDouble(txtPreco.getText().replace(",", ".")),
                                 txtDescricao.getText()));
-                //Atualiza a tabela.
+                //Atualiza a tabela.                
                 adapter.fireTableDataChanged();
                 //Fecha a janela.
                 setVisible(false);

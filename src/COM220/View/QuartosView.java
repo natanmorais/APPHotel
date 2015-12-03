@@ -30,8 +30,8 @@ public class QuartosView extends javax.swing.JFrame {
         //define que a janela iniciará centralizado.
         setLocationRelativeTo(null);
 
-        adapter = new QuartosView.QuartoAdapter(controle.listaDeQuartos());
-        tbClientes.setModel(adapter);
+        adapter = new QuartosView.QuartoAdapter(controle);
+        tbQuartos.setModel(adapter);
         
         setVisible(true);  
     }
@@ -46,14 +46,14 @@ public class QuartosView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbClientes = new javax.swing.JTable();
+        tbQuartos = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(633, 459));
 
-        tbClientes.setAutoCreateRowSorter(true);
-        tbClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tbQuartos.setAutoCreateRowSorter(true);
+        tbQuartos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -61,7 +61,7 @@ public class QuartosView extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tbClientes);
+        jScrollPane1.setViewportView(tbQuartos);
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Plus.png"))); // NOI18N
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,20 +103,20 @@ public class QuartosView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbClientes;
+    private javax.swing.JTable tbQuartos;
     // End of variables declaration//GEN-END:variables
 
     public class QuartoAdapter extends AbstractTableModel {
 
-        private List<Quarto> quartos = new ArrayList<>();
+        private ctrQuarto controle;
 
-        public QuartoAdapter(List<Quarto> quartos) {
-            this.quartos = quartos;
+        public QuartoAdapter(ctrQuarto controle) {
+            this.controle = controle;
         }
         
         @Override
         public int getRowCount() {
-           return quartos.size();
+           return controle.listaDeQuartos().size();
         }
 
         @Override
@@ -126,7 +126,7 @@ public class QuartosView extends javax.swing.JFrame {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Quarto q = this.quartos.get(rowIndex);
+            Quarto q = this.controle.listaDeQuartos().get(rowIndex);
             if (columnIndex == 1) {
                 return q.getPreço();
             } else if (columnIndex == 2) {
