@@ -6,14 +6,15 @@
 package COM220.Model;
 
 import COM220.Utils.Constants;
+import java.io.Serializable;
 /**
  *
  * @author natanmorais
  */
-public class Pagamento {
+public class Pagamento implements Serializable{
     float Valor;
-    int Situação;
     Reserva ReservaEfetuada;
+    int Situacao = Constants.NAO_PAGO;
 
     public Pagamento() {
     }
@@ -22,9 +23,8 @@ public class Pagamento {
         this.ReservaEfetuada = ReservaEfetuada;
     }
 
-    public Pagamento(float Valor, int Situação, Reserva ReservaEfetuada) {
+    public Pagamento(float Valor, Reserva ReservaEfetuada) {
         this.Valor = Valor;
-        this.Situação = Situação;
         this.ReservaEfetuada = ReservaEfetuada;
     }
 
@@ -36,12 +36,12 @@ public class Pagamento {
         this.Valor = Valor;
     }
 
-    public int getSituação() {
-        return Situação;
+    public int getSituacao() {
+        return Situacao;
     }
 
-    public void setSituação(int Situação) {
-        this.Situação = Situação;
+    public void setSituacao(int Situacao) {
+        this.Situacao = Situacao;
     }
 
     public Reserva getReservaEfetuada() {

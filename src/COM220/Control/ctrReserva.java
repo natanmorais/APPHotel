@@ -145,7 +145,7 @@ public class ctrReserva {
         ArrayList<Reserva> naoP = new ArrayList<>();
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
-            if (p.getSituação() == Constants.NAO_PAGO) {
+            if (p.getSituacao() == Constants.NAO_PAGO) {
                 naoP.add(p.getReservaEfetuada());
             }
         }
@@ -157,7 +157,7 @@ public class ctrReserva {
         Calendar hoje = Calendar.getInstance(), dia = null;
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
-            if (p.getSituação() == Constants.NAO_PAGO) {
+            if (p.getSituacao() == Constants.NAO_PAGO) {
                 dia.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
                 if ((dia.get(Calendar.DAY_OF_YEAR) + 3) == hoje.get(Calendar.DAY_OF_YEAR)) {
                     naoP.add(p.getReservaEfetuada());

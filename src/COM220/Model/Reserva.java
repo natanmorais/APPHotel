@@ -93,4 +93,9 @@ public class Reserva implements Serializable {
     public void setCancelada(Boolean Cancelada) {
         this.Cancelada = Cancelada;
     }
+
+    @Override
+    public String toString() {
+        return "[" + getCodigo() + "] - " + getCliente().getNome();
+    } 
 }

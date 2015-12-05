@@ -88,13 +88,13 @@ public class ctrPagamento {
             throw new Exception("Valor de pagamento maior que o valor da Reserva!");
         }
         else if(p.getValor()==Preço){
-            p.setSituação(Constants.GARANTIDO);
+            p.setSituacao(Constants.GARANTIDO);
         }
         else if(p.getValor()>= Preço/(dataSaí.get(Calendar.DAY_OF_YEAR)-dataEnt.get(Calendar.DAY_OF_YEAR))){
-            p.setSituação(Constants.GARANTIDO);
+            p.setSituacao(Constants.GARANTIDO);
         }
         else {
-            p.setSituação(Constants.NAO_GARANTIDO);
+            p.setSituacao(Constants.NAO_GARANTIDO);
         }
         listaPagamentos.add(p);
         SalvaPagamento();
@@ -103,7 +103,7 @@ public class ctrPagamento {
     public int VerificarPagamento(int cod) {
         for(Pagamento p: listaPagamentos){
             if(p.getReservaEfetuada().getCodigo() == cod){
-                return p.getSituação();
+                return p.getSituacao();
             }
         }
         return Constants.ERRO;
