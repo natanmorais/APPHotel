@@ -5,35 +5,32 @@
  */
 package COM220.View;
 
-import COM220.Control.ctrQuarto;
-import COM220.Model.Cliente;
-import COM220.Model.Quarto;
-import java.util.ArrayList;
-import java.util.List;
+import COM220.Control.ctrReserva;
+import COM220.Model.Reserva;
+import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 /**
  *
  * @author tiago
  */
-public class QuartosView extends javax.swing.JFrame {
+public class ReservasView extends javax.swing.JFrame {
 
-    private final ctrQuarto controle = new ctrQuarto();
-    private final QuartoAdapter adapter;
+    private final ctrReserva controle = new ctrReserva();
+    private final ReservasView.ReservaAdapter adapter;
     
     /**
-     * Creates new form QuartosView
+     * Creates new form ReservasView
      */
-    public QuartosView() {
+    public ReservasView() {
         initComponents();
-        
         //define que a janela iniciará centralizado.
         setLocationRelativeTo(null);
 
-        adapter = new QuartosView.QuartoAdapter(controle);
-        tbQuartos.setModel(adapter);
+        adapter = new ReservasView.ReservaAdapter(controle);
+        tbReservas.setModel(adapter);
         
-        setVisible(true);  
+        setVisible(true);
     }
 
     /**
@@ -46,14 +43,14 @@ public class QuartosView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbQuartos = new javax.swing.JTable();
+        tbReservas = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(633, 459));
 
-        tbQuartos.setAutoCreateRowSorter(true);
-        tbQuartos.setModel(new javax.swing.table.DefaultTableModel(
+        tbReservas.setAutoCreateRowSorter(true);
+        tbReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -61,7 +58,7 @@ public class QuartosView extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tbQuartos);
+        jScrollPane1.setViewportView(tbReservas);
 
         btnAdicionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Plus.png"))); // NOI18N
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
@@ -76,17 +73,17 @@ public class QuartosView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAdicionar)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(btnAdicionar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -97,53 +94,65 @@ public class QuartosView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        new AddQuarto(controle, adapter);
+        new AddReserva(controle, adapter);
     }//GEN-LAST:event_btnAdicionarActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbQuartos;
+    private javax.swing.JTable tbReservas;
     // End of variables declaration//GEN-END:variables
 
-    public class QuartoAdapter extends AbstractTableModel {
+    public class ReservaAdapter extends AbstractTableModel {
 
-        private ctrQuarto controle;
+        private ctrReserva controle;
 
-        public QuartoAdapter(ctrQuarto controle) {
+        public ReservaAdapter(ctrReserva controle) {
             this.controle = controle;
         }
         
         @Override
         public int getRowCount() {
-           return controle.listaDeQuartos().size();
+           return controle.listarTodasReservas().size();
         }
 
         @Override
         public int getColumnCount() {
-            return 3;
+            return 6;
         }
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Quarto q = this.controle.listaDeQuartos().get(rowIndex);
+            Reserva r = this.controle.listarTodasReservas().get(rowIndex);
             if (columnIndex == 1) {
-                return q.getPreco();
+                return new Date( r.getDataEntrada() );
             } else if (columnIndex == 2) {
-                return q.getDescricao();
-            }  else {
-                return q.getNumero();
+                return new Date( r.getDataSaida() );
+            } else if(columnIndex == 3){
+                return r.getQuartos().size();
+            } else if(columnIndex == 4){
+                return r.getDesconto();
+            }else if(columnIndex == 5){
+               return r.getCancelada() ? "SIM" : "NAO";
+            } else {
+                return r.getCliente().getNome();
             }
         }
 
         @Override
         public String getColumnName(int column) {
             if (column == 1) {
-                return "Preço";
+                return "Data de entrada";
             } else if (column == 2) {
-                return "Descrição";
+                return "Data de saída";
+            } else if (column == 3) {
+                return "Número de quartos";
+            } else if (column == 4) {
+                return "Desconto";
+            } else if (column == 5) {
+                return "Cancelada?";
             } else {
-                return "Número";
+                return "Nome";
             }
         }
 

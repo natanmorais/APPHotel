@@ -8,6 +8,8 @@ package COM220.Model;
 import COM220.Utils.Constants;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -15,29 +17,34 @@ import java.util.ArrayList;
  */
 public class Reserva implements Serializable {
 
-    int Codigo;
-    long dataEntrada, dataSaída;
-    double Desconto;
-    ArrayList<Quarto> Quartos = new ArrayList<>();
-    Boolean Cancelada = false;
+    private long dataEntrada, dataSaida;
+    private double Desconto;
+    private List<Quarto> Quartos = new ArrayList<>();
+    private Boolean Cancelada = false;
+    private Cliente cliente;
+    private final long codigo;
 
     public Reserva() {
+        //Código único.
+        codigo = Calendar.getInstance().getTimeInMillis();
     }
 
-    public Reserva(int Codigo, long dataEntrada, long dataSaída, double Desconto) {
+    public Reserva( Cliente cliente, long dataEntrada, long dataSaida, double Desconto) {
+        this();
+        this.cliente = cliente;
         this.dataEntrada = dataEntrada;
-        this.dataSaída = dataSaída;
+        this.dataSaida = dataSaida;
         this.Desconto = Desconto;
     }
-
-    public int getCodigo() {
-        return Codigo;
+    
+    public long getCodigo(){
+        return codigo;
     }
-
-    public void setCodigo(int Codigo) {
-        this.Codigo = Codigo;
-    }
-
+    
+    public Cliente getCliente(){
+        return cliente;
+    }   
+    
     public long getDataEntrada() {
         return dataEntrada;
     }
@@ -46,12 +53,12 @@ public class Reserva implements Serializable {
         this.dataEntrada = dataEntrada;
     }
 
-    public long getDataSaída() {
-        return dataSaída;
+    public long getDataSaida() {
+        return dataSaida;
     }
 
-    public void setDataSaída(long dataSaída) {
-        this.dataSaída = dataSaída;
+    public void setDataSaida(long dataSaída) {
+        this.dataSaida = dataSaída;
     }
 
     public double getDesconto() {
@@ -62,11 +69,11 @@ public class Reserva implements Serializable {
         this.Desconto = Desconto;
     }
 
-    public ArrayList<Quarto> getQuartos() {
+    public List<Quarto> getQuartos() {
         return Quartos;
     }
 
-    public void setQuartos(ArrayList<Quarto> Quartos) {
+    public void setQuartos(List<Quarto> Quartos) {
         this.Quartos = Quartos;
     }
 
@@ -74,7 +81,7 @@ public class Reserva implements Serializable {
         double percent = this.getDesconto()/100;
         double Preço = 0;
         for (Quarto q : Quartos) {
-            Preço += q.getPreço();
+            Preço += q.getPreco();
         }
         return Preço * percent;
     }

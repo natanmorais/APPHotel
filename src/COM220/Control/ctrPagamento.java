@@ -84,10 +84,10 @@ public class ctrPagamento {
         }
         Calendar dataEnt = null, dataSaí = null;
         dataEnt.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
-        dataSaí.setTimeInMillis(p.getReservaEfetuada().getDataSaída());
+        dataSaí.setTimeInMillis(p.getReservaEfetuada().getDataSaida());
         double Preço = p.getReservaEfetuada().calcularDesconto();
         for(Quarto q: p.getReservaEfetuada().getQuartos()){
-            Preço += q.getPreço();
+            Preço += q.getPreco();
         }
         if(p.getValor()>Preço){
             throw new Exception("Valor de pagamento maior que o valor da Reserva!");

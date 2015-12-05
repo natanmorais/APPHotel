@@ -7,8 +7,6 @@ package COM220.View;
 
 import COM220.Control.ctrCliente;
 import COM220.Model.Cliente;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -46,6 +44,7 @@ public class ClientesView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbClientes = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
+        btnCriarReserva = new javax.swing.JButton();
 
         tbClientes.setAutoCreateRowSorter(true);
         tbClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -65,6 +64,13 @@ public class ClientesView extends javax.swing.JFrame {
             }
         });
 
+        btnCriarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Add Ticket.png"))); // NOI18N
+        btnCriarReserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCriarReservaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -76,13 +82,17 @@ public class ClientesView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(btnAdicionar)
+                .addGap(30, 30, 30)
+                .addComponent(btnCriarReserva)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCriarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -95,8 +105,13 @@ public class ClientesView extends javax.swing.JFrame {
         new AddCliente(controle, adapter);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
+    private void btnCriarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarReservaActionPerformed
+        
+    }//GEN-LAST:event_btnCriarReservaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnCriarReserva;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbClientes;
     // End of variables declaration//GEN-END:variables

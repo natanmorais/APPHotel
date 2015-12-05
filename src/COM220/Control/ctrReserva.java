@@ -13,6 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,11 +23,14 @@ import java.util.Calendar;
 public class ctrReserva {
 
     //Criar atributo para ter o view do Reserva.
-
     ArrayList<Reserva> listaReservas = new ArrayList<>();
     ctrQuarto controlQ = new ctrQuarto();
 
-    public void SalvaReserva() throws Exception {
+    public ctrReserva() {
+        BuscaReservas();
+    }
+
+    public void SalvaReserva() {
         try {
 
             //Gera o arquivo para armazenar o objeto
@@ -47,13 +52,10 @@ public class ctrReserva {
             arquivoGrav.close();
 
         } catch (Exception e) {
-
-            throw e;
-
         }
     }
 
-    public void BuscaReservas() throws Exception {
+    public void BuscaReservas() {
         try {
 
             //Carrega o arquivo
@@ -70,25 +72,26 @@ public class ctrReserva {
             arquivoLeitura.close();
 
         } catch (Exception e) {
-
-            throw e;
-
         }
     }
 
-    public ArrayList<Quarto> verificaDisponibilidade(long ini, long fim) throws Exception {
+    public List<Quarto> verificaDisponibilidade(long ini, long fim) {
         BuscaReservas();
-        ArrayList<Quarto> quartosDisp = controlQ.listaDeQuartos();
-        ArrayList<Integer> quartosNao = new ArrayList<>();
+        List<Quarto> quartosDisp = controlQ.listaDeQuartos();
+        List<Integer> quartosNao = new ArrayList<>();
         for (Reserva r : listaReservas) {
-            if (ini >= r.getDataEntrada() && ini <= r.getDataSaída() || 
-                    fim >= r.getDataEntrada() && fim <= r.getDataSaída() ||
-                    ini <= r.getDataEntrada() && fim >= r.getDataSaída()) {
-                for(Quarto q: r.getQuartos()){
+            if (r.getCancelada()
+                    || ini >= r.getDataEntrada() && ini <= r.getDataSaida()
+                    || fim >= r.getDataEntrada() && fim <= r.getDataSaida()
+                    || ini <= r.getDataEntrada() && fim >= r.getDataSaida()) {
+                for (Quarto q : r.getQuartos()) {
                     quartosNao.add(q.getNumero());
                 }
             }
         }
+        
+        ///Isso não pode!!!!!
+        
         for (Quarto q : quartosDisp) {
             for (Integer num : quartosNao) {
                 if (q.getNumero() == num) {
@@ -96,18 +99,24 @@ public class ctrReserva {
                 }
             }
         }
+
         return quartosDisp;
     }
-    
-    public ArrayList<Reserva> listarTodasReservas() throws Exception{
+
+    public void addReserva(Reserva reserva) {
         BuscaReservas();
+        listaReservas.add(reserva);
+        SalvaReserva();
+    }
+
+    public ArrayList<Reserva> listarTodasReservas() {
         return listaReservas;
     }
-    
-    public void cancelarReserva(int cod) throws Exception{
+
+    public void cancelarReserva(long cod) {
         BuscaReservas();
-        for(Reserva r: listaReservas){
-            if(r.getCodigo()==cod){
+        for (Reserva r : listaReservas) {
+            if (r.getCodigo() == cod) {
                 r.setCancelada(true);
             }
         }

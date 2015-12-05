@@ -14,16 +14,16 @@ import java.io.Serializable;
  */
 public class Quarto implements Serializable{
     int Numero;
-    double Preço;
-    String Descrição;
+    double Preco;
+    String Descricao;
 
     public Quarto() {
     }
 
-    public Quarto(int Numero, double Preço, String Descrição) {
+    public Quarto(int Numero, double Preco, String Descricao) {
         this.Numero = Numero;
-        this.Preço = Preço;
-        this.Descrição = Descrição;
+        this.Preco = Preco;
+        this.Descricao = Descricao;
     }
 
     public int getNumero() {
@@ -34,20 +34,24 @@ public class Quarto implements Serializable{
         this.Numero = Numero;
     }
 
-    public double getPreço() {
-        return Preço;
+    public double getPreco() {
+        return Preco;
     }
 
-    public void setPreço(double Preço) {
-        this.Preço = Preço;
+    public void setPreco(double Preco) {
+        this.Preco = Preco;
     }
 
-    public String getDescrição() {
-        return Descrição;
+    public String getDescricao() {
+        return Descricao;
     }
 
-    public void setDescrição(String Descrição) {
-        this.Descrição = Descrição;
+    public void setDescricao(String Descricao) {
+        this.Descricao = Descricao;
     }
-    
+
+    @Override
+    public String toString() {
+        return "[" + getNumero() + "] - " + getDescricao() + " Preço: R$" + getPreco();
+    }    
 }

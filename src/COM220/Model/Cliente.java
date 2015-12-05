@@ -57,6 +57,9 @@ public class Cliente implements Serializable{
     public void setTelefone(String Telefone) {
         this.Telefone = Telefone;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }

@@ -49,7 +49,7 @@ public class AddQuarto extends javax.swing.JFrame {
         txtNumero = new javax.swing.JFormattedTextField();
         txtPreco = new javax.swing.JFormattedTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setText("Descrição");
 
