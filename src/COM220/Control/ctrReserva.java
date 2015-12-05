@@ -5,8 +5,10 @@
  */
 package COM220.Control;
 
+import COM220.Model.Pagamento;
 import COM220.Model.Quarto;
 import COM220.Model.Reserva;
+import COM220.Utils.Constants;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -25,6 +27,7 @@ public class ctrReserva {
     //Criar atributo para ter o view do Reserva.
     ArrayList<Reserva> listaReservas = new ArrayList<>();
     ctrQuarto controlQ = new ctrQuarto();
+    ctrPagamento controlP = new ctrPagamento();
 
     public ctrReserva() {
         BuscaReservas();
@@ -120,5 +123,63 @@ public class ctrReserva {
                 r.setCancelada(true);
             }
         }
+    }
+
+    public double calculaDesconto(Reserva r) {
+        return r.calcularDesconto();
+    }
+
+    public void fazerReserva(Reserva r) throws Exception {
+        BuscaReservas();
+        listaReservas.add(r);
+        SalvaReserva();
+    }
+
+    public ArrayList<Reserva> relatorioCancelados() throws Exception {
+        ArrayList<Reserva> canc = new ArrayList<>();
+        BuscaReservas();
+        for (Reserva r : listaReservas) {
+            if (r.getCancelada()) {
+                canc.add(r);
+            }
+        }
+        return canc;
+    }
+
+    public ArrayList<Reserva> relatorioNaoPagos() throws Exception {
+        ArrayList<Reserva> naoP = new ArrayList<>();
+        BuscaReservas();
+        for (Pagamento p : controlP.listaPagamentos) {
+            if (p.getSituação() == Constants.NAO_PAGO) {
+                naoP.add(p.getReservaEfetuada());
+            }
+        }
+        return naoP;
+    }
+
+    public ArrayList<Reserva> relatorioASerPagoHoje() throws Exception {
+        ArrayList<Reserva> naoP = new ArrayList<>();
+        Calendar hoje = Calendar.getInstance(), dia = null;
+        BuscaReservas();
+        for (Pagamento p : controlP.listaPagamentos) {
+            if (p.getSituação() == Constants.NAO_PAGO) {
+                dia.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
+                if ((dia.get(Calendar.DAY_OF_YEAR) + 3) == hoje.get(Calendar.DAY_OF_YEAR)) {
+                    naoP.add(p.getReservaEfetuada());
+                }
+            }
+        }
+        return naoP;
+    }
+
+    public ArrayList<Reserva> relatorioPeriodo(long ini, long fim) throws Exception {
+        ArrayList<Reserva> list = new ArrayList<>();
+        BuscaReservas();
+        for (Reserva r : listaReservas) {
+            if (r.getDataEntrada() >= ini && r.getDataEntrada() <= fim) {
+                list.add(r);
+            }
+        }
+        return list;
     }
 }
