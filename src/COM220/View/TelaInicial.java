@@ -48,14 +48,19 @@ public class TelaInicial extends javax.swing.JFrame {
 
         btnQuartos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Bed.png"))); // NOI18N
         btnQuartos.setText("QUARTOS");
-        btnQuartos.setActionCommand("QUARTOS");
         btnQuartos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnQuartosActionPerformed(evt);
             }
         });
 
-        jButton3.setText("jButton1");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Money.png"))); // NOI18N
+        jButton3.setText("PAGAMENTOS");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         btnClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/User Group.png"))); // NOI18N
         btnClientes.setText("CLIENTES");
@@ -106,6 +111,10 @@ public class TelaInicial extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         new ReservasView();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        new PagamentoView();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClientes;

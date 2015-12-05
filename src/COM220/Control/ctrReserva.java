@@ -94,22 +94,17 @@ public class ctrReserva {
         }
         
         ///Isso não pode!!!!!
+        //Dica 1: procure por java.util.ConcurrentModificationException
         
         for (Quarto q : quartosDisp) {
             for (Integer num : quartosNao) {
                 if (q.getNumero() == num) {
-                    quartosDisp.remove(q);
+                    quartosDisp.remove(q); // <--- nao pode! だめだよ!
                 }
             }
         }
 
         return quartosDisp;
-    }
-
-    public void addReserva(Reserva reserva) {
-        BuscaReservas();
-        listaReservas.add(reserva);
-        SalvaReserva();
     }
 
     public ArrayList<Reserva> listarTodasReservas() {
@@ -129,13 +124,13 @@ public class ctrReserva {
         return r.calcularDesconto();
     }
 
-    public void fazerReserva(Reserva r) throws Exception {
+    public void fazerReserva(Reserva r) {
         BuscaReservas();
         listaReservas.add(r);
         SalvaReserva();
     }
 
-    public ArrayList<Reserva> relatorioCancelados() throws Exception {
+    public ArrayList<Reserva> relatorioCancelados() {
         ArrayList<Reserva> canc = new ArrayList<>();
         BuscaReservas();
         for (Reserva r : listaReservas) {
@@ -146,7 +141,7 @@ public class ctrReserva {
         return canc;
     }
 
-    public ArrayList<Reserva> relatorioNaoPagos() throws Exception {
+    public ArrayList<Reserva> relatorioNaoPagos() {
         ArrayList<Reserva> naoP = new ArrayList<>();
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
@@ -157,7 +152,7 @@ public class ctrReserva {
         return naoP;
     }
 
-    public ArrayList<Reserva> relatorioASerPagoHoje() throws Exception {
+    public ArrayList<Reserva> relatorioASerPagoHoje() {
         ArrayList<Reserva> naoP = new ArrayList<>();
         Calendar hoje = Calendar.getInstance(), dia = null;
         BuscaReservas();
@@ -172,7 +167,7 @@ public class ctrReserva {
         return naoP;
     }
 
-    public ArrayList<Reserva> relatorioPeriodo(long ini, long fim) throws Exception {
+    public ArrayList<Reserva> relatorioPeriodo(long ini, long fim){
         ArrayList<Reserva> list = new ArrayList<>();
         BuscaReservas();
         for (Reserva r : listaReservas) {

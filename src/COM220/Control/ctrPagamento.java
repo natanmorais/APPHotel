@@ -23,7 +23,7 @@ public class ctrPagamento {
     //Criar atributo para ter o view do Pagamento.
     ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
 
-    public void SalvaPagamento() throws Exception{
+    public void SalvaPagamento() {
         try {
 
             //Gera o arquivo para armazenar o objeto
@@ -46,12 +46,10 @@ public class ctrPagamento {
 
         } catch (Exception e) {
 
-            throw e;
-
         }
     }
 
-    public void BuscaPagamentos() throws Exception{
+    public void BuscaPagamentos()  {
         try {
 
             //Carrega o arquivo
@@ -68,9 +66,6 @@ public class ctrPagamento {
             arquivoLeitura.close();
 
         } catch (Exception e) {
-
-            throw e;
-
         }
     }
     

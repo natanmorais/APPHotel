@@ -179,7 +179,7 @@ public class AddReserva extends javax.swing.JFrame {
                 ((Date) sDataSaida.getValue()).getTime(),
                 (double) sDesconto.getValue());
         r.setQuartos(lstQuartos.getSelectedValuesList());
-        controle.addReserva(r);
+        controle.fazerReserva(r);
         //Atualiza a tabela.
         adapter.fireTableDataChanged();
         //Fecha a janela.
