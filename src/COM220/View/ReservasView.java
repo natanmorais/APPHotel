@@ -223,7 +223,7 @@ public class ReservasView extends javax.swing.JFrame {
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return true;
+            return false;
         }
     }
 }
