@@ -11,6 +11,8 @@ import COM220.Model.Pagamento;
 import COM220.Model.Reserva;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 /**
  *
@@ -20,21 +22,22 @@ public class AddPagamento extends javax.swing.JFrame {
 
     private final PagamentoView.PagamentoAdapter adapter;
     private final ctrPagamento controle;
+
     /**
      * Creates new form AddPagamento
      */
     public AddPagamento(ctrPagamento controle, PagamentoView.PagamentoAdapter adapter) {
         initComponents();
-        
+
         this.controle = controle;
         this.adapter = adapter;
-        
+
         setLocationRelativeTo(null);
-        
+
         for (Reserva r : new ctrReserva().listarTodasReservas()) {
             cbReservas.addItem(r);
         }
-        
+
         setVisible(true);
     }
 
@@ -111,12 +114,11 @@ public class AddPagamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
-        // TODO add your handling code here:
-        if(cbReservas.getSelectedIndex() != -1 && Float.parseFloat(txtValor.getText()) >= 0){
-            try {
-                controle.RegistrarPagamento(new Pagamento(Float.parseFloat(txtValor.getText()), (Reserva) cbReservas.getSelectedItem()));
-            } catch (Exception ex) {
-                
+        float valor = Float.parseFloat(txtValor.getText().replace(",", "."));
+        if (cbReservas.getSelectedIndex() != -1 && valor >= 0) {
+            if(!controle.RegistrarPagamento(
+                    new Pagamento(valor, (Reserva) cbReservas.getSelectedItem()))){
+                JOptionPane.showMessageDialog(null, "Você está tentando pagar mais do que o valor da reserva", "ERRO", ERROR_MESSAGE);
             }
         }
         adapter.fireTableDataChanged();

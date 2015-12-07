@@ -168,7 +168,7 @@ public class ctrReserva {
 
     public ArrayList<Reserva> relatorioASerPagoHoje() {
         ArrayList<Reserva> naoP = new ArrayList<>();
-        Calendar hoje = Calendar.getInstance(), dia = null;
+        Calendar hoje = Calendar.getInstance(), dia = Calendar.getInstance();
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
             if (p.getSituacao() == Constants.NAO_PAGO) {
