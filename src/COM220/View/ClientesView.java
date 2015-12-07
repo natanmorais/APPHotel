@@ -45,7 +45,6 @@ public class ClientesView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbClientes = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
-        btnCriarReserva = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
 
         tbClientes.setAutoCreateRowSorter(true);
@@ -63,13 +62,6 @@ public class ClientesView extends javax.swing.JFrame {
         btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdicionarActionPerformed(evt);
-            }
-        });
-
-        btnCriarReserva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Add Ticket.png"))); // NOI18N
-        btnCriarReserva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCriarReservaActionPerformed(evt);
             }
         });
 
@@ -93,8 +85,6 @@ public class ClientesView extends javax.swing.JFrame {
                 .addComponent(btnAdicionar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRemover)
-                .addGap(47, 47, 47)
-                .addComponent(btnCriarReserva)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -103,7 +93,6 @@ public class ClientesView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCriarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -117,10 +106,6 @@ public class ClientesView extends javax.swing.JFrame {
         new AddCliente(controle, adapter);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
-    private void btnCriarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarReservaActionPerformed
-
-    }//GEN-LAST:event_btnCriarReservaActionPerformed
-
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         for (int row : tbClientes.getSelectedRows()) {
             controle.RemoverCliente(adapter.getValueAt(row).getCPF());
@@ -130,7 +115,6 @@ public class ClientesView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
-    private javax.swing.JButton btnCriarReserva;
     private javax.swing.JButton btnRemover;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbClientes;

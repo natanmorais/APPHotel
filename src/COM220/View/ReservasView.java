@@ -45,6 +45,9 @@ public class ReservasView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbReservas = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        btnDescancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(633, 459));
@@ -67,6 +70,27 @@ public class ReservasView extends javax.swing.JFrame {
             }
         });
 
+        btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Minus.png"))); // NOI18N
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Thumbs Down.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnDescancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Thumb Up.png"))); // NOI18N
+        btnDescancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,6 +101,12 @@ public class ReservasView extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAdicionar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRemover)
+                        .addGap(48, 48, 48)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDescancelar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -84,7 +114,14 @@ public class ReservasView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnRemover)
+                            .addComponent(btnCancelar)
+                            .addComponent(btnDescancelar))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -97,8 +134,32 @@ public class ReservasView extends javax.swing.JFrame {
         new AddReserva(controle, adapter);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        for (int row : tbReservas.getSelectedRows()) {
+            controle.RemoverReserva(adapter.getValueAt(row).getCodigo());
+        }
+        adapter.fireTableDataChanged();
+    }//GEN-LAST:event_btnRemoverActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        for (int row : tbReservas.getSelectedRows()) {
+            controle.cancelarReserva(adapter.getValueAt(row).getCodigo(), true);
+        }
+        adapter.fireTableDataChanged();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnDescancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescancelarActionPerformed
+        for (int row : tbReservas.getSelectedRows()) {
+            controle.cancelarReserva(adapter.getValueAt(row).getCodigo(), false);
+        }
+        adapter.fireTableDataChanged();
+    }//GEN-LAST:event_btnDescancelarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnDescancelar;
+    private javax.swing.JButton btnRemover;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbReservas;
     // End of variables declaration//GEN-END:variables
@@ -120,10 +181,14 @@ public class ReservasView extends javax.swing.JFrame {
         public int getColumnCount() {
             return 6;
         }
+        
+        public Reserva getValueAt(int rowIndex){
+            return this.controle.listarTodasReservas().get(rowIndex);
+        }
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Reserva r = this.controle.listarTodasReservas().get(rowIndex);
+            Reserva r = getValueAt(rowIndex);
             if (columnIndex == 1) {
                 return new Date( r.getDataEntrada() );
             } else if (columnIndex == 2) {

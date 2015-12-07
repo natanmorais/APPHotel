@@ -5,6 +5,7 @@
  */
 package COM220.Control;
 
+import COM220.Model.Cliente;
 import COM220.Model.Pagamento;
 import COM220.Model.Quarto;
 import COM220.Model.Reserva;
@@ -84,17 +85,17 @@ public class ctrReserva {
         List<Quarto> quartosDisp = controlQ.listaDeQuartos();
         List<Integer> quartosNao = new ArrayList<>();
         for (Reserva r : listaReservas) {
-            if (r.getCancelada()
-                    || ini >= r.getDataEntrada() && ini <= r.getDataSaida()
+            if ( !r.getCancelada() && (
+                    ini >= r.getDataEntrada() && ini <= r.getDataSaida()
                     || fim >= r.getDataEntrada() && fim <= r.getDataSaida()
-                    || ini <= r.getDataEntrada() && fim >= r.getDataSaida()) {
+                    || ini <= r.getDataEntrada() && fim >= r.getDataSaida())) {
                 for (Quarto q : r.getQuartos()) {
                     quartosNao.add(q.getNumero());
                 }
             }
         }
-        
-        for(Iterator<Quarto> it = quartosDisp.iterator(); it.hasNext(); ){
+
+        for (Iterator<Quarto> it = quartosDisp.iterator(); it.hasNext();) {
             Quarto q = it.next();
             for (Integer num : quartosNao) {
                 if (q.getNumero() == num) {
@@ -111,13 +112,26 @@ public class ctrReserva {
         return listaReservas;
     }
 
-    public void cancelarReserva(long cod) {
+    public boolean RemoverReserva(long codigo) {
+        for (Reserva r : listaReservas) {
+            if (r.getCodigo() == codigo) {
+                listaReservas.remove(r);
+                SalvaReserva();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void cancelarReserva(long cod, boolean value) {
         BuscaReservas();
         for (Reserva r : listaReservas) {
             if (r.getCodigo() == cod) {
-                r.setCancelada(true);
+                r.setCancelada(value);
+                break;
             }
         }
+        SalvaReserva();
     }
 
     public double calculaDesconto(Reserva r) {
@@ -167,7 +181,7 @@ public class ctrReserva {
         return naoP;
     }
 
-    public ArrayList<Reserva> relatorioPeriodo(long ini, long fim){
+    public ArrayList<Reserva> relatorioPeriodo(long ini, long fim) {
         ArrayList<Reserva> list = new ArrayList<>();
         BuscaReservas();
         for (Reserva r : listaReservas) {
