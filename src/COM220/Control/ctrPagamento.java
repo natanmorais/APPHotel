@@ -109,4 +109,9 @@ public class ctrPagamento {
         return Constants.ERRO;
     }
     
+    public ArrayList<Pagamento> listarTodosPagamentos() {
+        BuscaPagamentos();
+        return listaPagamentos;
+    }
+    
 }

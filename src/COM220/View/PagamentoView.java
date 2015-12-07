@@ -5,17 +5,31 @@
  */
 package COM220.View;
 
+import COM220.Control.ctrPagamento;
+import COM220.Model.Pagamento;
+import COM220.Model.Reserva;
+import javax.swing.table.AbstractTableModel;
+
 /**
  *
  * @author tiago
  */
 public class PagamentoView extends javax.swing.JFrame {
 
+    private final ctrPagamento controle = new ctrPagamento();
+    private final PagamentoView.PagamentoAdapter adapter;
     /**
      * Creates new form PagamentoView
      */
     public PagamentoView() {
         initComponents();
+        //define que a janela iniciará centralizado.
+        setLocationRelativeTo(null);
+
+        adapter = new PagamentoView.PagamentoAdapter(controle);
+        tbPagamentos.setModel(adapter);
+        
+        setVisible(true);
     }
 
     /**
@@ -78,7 +92,7 @@ public class PagamentoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        
+        new AddPagamento(controle, adapter);
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -86,4 +100,55 @@ public class PagamentoView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbPagamentos;
     // End of variables declaration//GEN-END:variables
+
+    public class PagamentoAdapter extends AbstractTableModel {
+
+        private ctrPagamento controle;
+
+        public PagamentoAdapter(ctrPagamento controle) {
+            this.controle = controle;
+        }
+
+        @Override
+        public int getRowCount() {
+            return controle.listarTodosPagamentos().size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 3;
+        }
+
+        public Pagamento getValueAt(int rowIndex) {
+            return this.controle.listarTodosPagamentos().get(rowIndex);
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Pagamento r = getValueAt(rowIndex);
+            if (columnIndex == 1) {
+                return r.getReservaEfetuada();
+            } else if (columnIndex == 2) {
+                return r.getValor();
+            } else {
+                return r.getSituacao();
+            }
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            if (column == 1) {
+                return "Reserva";
+            } else if (column == 2) {
+                return "Valor";
+            } else {
+                return "Situação";
+            }
+        }
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return true;
+        }
+    }
 }
