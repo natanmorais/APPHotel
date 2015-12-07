@@ -153,6 +153,7 @@ public class ctrReserva {
 
     public ArrayList<Reserva> relatorioCancelados() {
         ArrayList<Reserva> canc = new ArrayList<>();
+        controlP.BuscaPagamentos();
         BuscaReservas();
         for (Reserva r : listaReservas) {
             if (r.getCancelada()) {
@@ -164,6 +165,7 @@ public class ctrReserva {
 
     public ArrayList<Reserva> relatorioNaoPagos() {
         ArrayList<Reserva> naoP = new ArrayList<>();
+        controlP.BuscaPagamentos();
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
             if (p.getSituacao() == Constants.NAO_PAGO) {
@@ -176,6 +178,7 @@ public class ctrReserva {
     public ArrayList<Reserva> relatorioASerPagoHoje() {
         ArrayList<Reserva> naoP = new ArrayList<>();
         Calendar hoje = Calendar.getInstance(), dia = Calendar.getInstance();
+        controlP.BuscaPagamentos();
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
             if (p.getSituacao() == Constants.NAO_PAGO || p.getSituacao() == Constants.NAO_GARANTIDO) {
