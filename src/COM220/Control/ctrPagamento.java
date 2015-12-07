@@ -75,6 +75,7 @@ public class ctrPagamento {
             if(p.getReservaEfetuada().getCodigo()==pAux.getReservaEfetuada().getCodigo()){
                 p.setValor(p.getValor()+pAux.getValor());
                 listaPagamentos.remove(pAux);
+                break;
             }
         }
         Calendar dataEnt = null, dataSaí = null;
