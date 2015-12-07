@@ -93,7 +93,7 @@ public class ctrPagamento {
         if (p.getValor() > Preço) {
             return false;
         } else if (p.getValor() == Preço) {
-            p.setSituacao(Constants.GARANTIDO);
+            p.setSituacao(Constants.PAGO);
         } else if (p.getValor() >= Preço / (dataSai.get(Calendar.DAY_OF_YEAR) - dataEnt.get(Calendar.DAY_OF_YEAR))) {
             p.setSituacao(Constants.GARANTIDO);
         } else {

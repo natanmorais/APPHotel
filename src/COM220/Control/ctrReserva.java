@@ -178,9 +178,9 @@ public class ctrReserva {
         Calendar hoje = Calendar.getInstance(), dia = Calendar.getInstance();
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
-            if (p.getSituacao() == Constants.NAO_PAGO) {
+            if (p.getSituacao() == Constants.NAO_PAGO || p.getSituacao() == Constants.NAO_GARANTIDO) {
                 dia.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
-                if ((dia.get(Calendar.DAY_OF_YEAR) + 3) == hoje.get(Calendar.DAY_OF_YEAR)) {
+                if ((dia.get(Calendar.DAY_OF_YEAR)) == hoje.get(Calendar.DAY_OF_YEAR) + 3) {
                     naoP.add(p.getReservaEfetuada());
                 }
             }
