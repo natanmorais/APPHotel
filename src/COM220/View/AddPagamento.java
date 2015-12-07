@@ -5,17 +5,26 @@
  */
 package COM220.View;
 
+import COM220.Control.ctrPagamento;
+import COM220.Model.Pagamento;
+import COM220.Model.Reserva;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author tiago
  */
 public class AddPagamento extends javax.swing.JFrame {
 
+    private final ctrPagamento controle;
     /**
      * Creates new form AddPagamento
      */
-    public AddPagamento() {
+    public AddPagamento(ctrPagamento controle) {
         initComponents();
+        
+        this.controle = controle;
     }
 
     /**
@@ -44,6 +53,8 @@ public class AddPagamento extends javax.swing.JFrame {
 
         jLabel11.setText("Reserva");
         jLabel11.setToolTipText("");
+
+        cbReservas.setName(""); // NOI18N
 
         jLabel12.setText("Valor a pagar");
         jLabel12.setToolTipText("");
@@ -90,6 +101,13 @@ public class AddPagamento extends javax.swing.JFrame {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         // TODO add your handling code here:
+        if(cbReservas.getSelectedIndex() != -1 && Double.parseDouble(txtValor.getText()) >= 0){
+            try {
+                controle.RegistrarPagamento(new Pagamento(Float.parseFloat(txtValor.getText()), (Reserva) cbReservas.getSelectedItem()));
+            } catch (Exception ex) {
+                
+            }
+        }
     }//GEN-LAST:event_btnOKActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
