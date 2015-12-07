@@ -15,6 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -93,13 +94,12 @@ public class ctrReserva {
             }
         }
         
-        ///Isso não pode!!!!!
-        //Dica 1: procure por java.util.ConcurrentModificationException
-        
-        for (Quarto q : quartosDisp) {
+        for(Iterator<Quarto> it = quartosDisp.iterator(); it.hasNext(); ){
+            Quarto q = it.next();
             for (Integer num : quartosNao) {
                 if (q.getNumero() == num) {
-                    quartosDisp.remove(q); // <--- nao pode! だめだよ!
+                    it.remove();
+                    break;
                 }
             }
         }

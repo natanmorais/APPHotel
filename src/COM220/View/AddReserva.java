@@ -16,12 +16,15 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  *
  * @author tiago
  */
-public class AddReserva extends javax.swing.JFrame {
+public class AddReserva extends javax.swing.JFrame implements ChangeListener {
 
     private final ReservasView.ReservaAdapter adapter;
     private final ctrReserva controle;
@@ -37,11 +40,17 @@ public class AddReserva extends javax.swing.JFrame {
 
         setLocationRelativeTo(null);
 
-        lstQuartos.setModel(new QuartosDisponiveisAdapter());
+        lstQuartos.setModel(
+                new QuartosDisponiveisAdapter(
+                        ((Date) sDataEntrada.getValue()).getTime(),
+                        ((Date) sDataSaida.getValue()).getTime()));
 
         for (Cliente cl : new ctrCliente().listaDeClientes()) {
             cbClientes.addItem(cl);
         }
+
+        sDataEntrada.addChangeListener(this);
+        sDataSaida.addChangeListener(this);
 
         setVisible(true);
     }
@@ -171,7 +180,6 @@ public class AddReserva extends javax.swing.JFrame {
             return;
         }
 
-        //try{
         //Adiciona um novo cliente.
         Reserva r = new Reserva(
                 (Cliente) cbClientes.getSelectedItem(),
@@ -184,11 +192,18 @@ public class AddReserva extends javax.swing.JFrame {
         adapter.fireTableDataChanged();
         //Fecha a janela.
         setVisible(false);
-        dispose();
-        //}catch( Exception e ){
-        //}
+        dispose();        
     }//GEN-LAST:event_btnOKActionPerformed
 
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        //A lista de quartos disponiveis e atualizada quando o 
+        //usuario alterar a data de entrada e/ou saida da nova reserva
+        lstQuartos.setModel(
+                new QuartosDisponiveisAdapter(
+                        ((Date) sDataEntrada.getValue()).getTime(),
+                        ((Date) sDataSaida.getValue()).getTime()));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOK;
@@ -209,13 +224,8 @@ public class AddReserva extends javax.swing.JFrame {
 
         private List<Quarto> quartos;
 
-        public QuartosDisponiveisAdapter() {
-            Calendar c = Calendar.getInstance();
-            long a = c.getTimeInMillis();
-            c.add(Calendar.MONTH, 12);
-            long b = c.getTimeInMillis();
-
-            quartos = new ctrReserva().verificaDisponibilidade(a, b);
+        public QuartosDisponiveisAdapter(long ini, long fim) {
+            update(ini, fim);
         }
 
         @Override
@@ -226,6 +236,10 @@ public class AddReserva extends javax.swing.JFrame {
         @Override
         public Quarto getElementAt(int index) {
             return quartos.get(index);
+        }
+
+        public void update(long ini, long fim) {
+            quartos = new ctrReserva().verificaDisponibilidade(ini, fim);
         }
     }
 }
