@@ -80,4 +80,15 @@ public class ctrQuarto {
     public ArrayList <Quarto> listaDeQuartos() {
             return listaQuartos;        
     }
+    
+    public boolean RemoverQuarto( int numero ){
+        for(Quarto q : listaQuartos){
+            if(q.getNumero() == numero){
+                listaQuartos.remove(q);
+                SalvaQuarto();
+                return true;
+            }
+        }
+        return false;
+    }
 }

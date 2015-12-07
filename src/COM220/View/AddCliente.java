@@ -21,6 +21,7 @@ public class AddCliente extends javax.swing.JFrame {
      * Creates new form AddCliente
      */
     public AddCliente(ctrCliente controle, ClientesView.ClienteAdapter adapter) {
+        super( "Cadastrar cliente");
         initComponents();
 
         //define que a janela iniciará centralizado.

@@ -22,14 +22,15 @@ public class ClientesView extends javax.swing.JFrame {
      * Creates new form ClientesView
      */
     public ClientesView() {
+        super("Clientes");
         initComponents();
         //define que a janela iniciará centralizado.
         setLocationRelativeTo(null);
 
         adapter = new ClienteAdapter(controle);
         tbClientes.setModel(adapter);
-        
-        setVisible(true);        
+
+        setVisible(true);
     }
 
     /**
@@ -45,6 +46,7 @@ public class ClientesView extends javax.swing.JFrame {
         tbClientes = new javax.swing.JTable();
         btnAdicionar = new javax.swing.JButton();
         btnCriarReserva = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
 
         tbClientes.setAutoCreateRowSorter(true);
         tbClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -71,6 +73,13 @@ public class ClientesView extends javax.swing.JFrame {
             }
         });
 
+        btnRemover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Minus.png"))); // NOI18N
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +91,9 @@ public class ClientesView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(btnAdicionar)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRemover)
+                .addGap(47, 47, 47)
                 .addComponent(btnCriarReserva)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -92,7 +103,8 @@ public class ClientesView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAdicionar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCriarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCriarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -106,12 +118,20 @@ public class ClientesView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnCriarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarReservaActionPerformed
-        
+
     }//GEN-LAST:event_btnCriarReservaActionPerformed
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
+        for (int row : tbClientes.getSelectedRows()) {
+            controle.RemoverCliente(adapter.getValueAt(row).getCPF());
+        }
+        adapter.fireTableDataChanged();
+    }//GEN-LAST:event_btnRemoverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnCriarReserva;
+    private javax.swing.JButton btnRemover;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbClientes;
     // End of variables declaration//GEN-END:variables
@@ -123,10 +143,10 @@ public class ClientesView extends javax.swing.JFrame {
         public ClienteAdapter(ctrCliente controle) {
             this.controle = controle;
         }
-        
+
         @Override
         public int getRowCount() {
-           return controle.listaDeClientes().size();
+            return controle.listaDeClientes().size();
         }
 
         @Override
@@ -134,9 +154,13 @@ public class ClientesView extends javax.swing.JFrame {
             return 4;
         }
 
+        public Cliente getValueAt(int rowIndex) {
+            return controle.listaDeClientes().get(rowIndex);
+        }
+
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            Cliente c = this.controle.listaDeClientes().get(rowIndex);
+            Cliente c = getValueAt(rowIndex);
             if (columnIndex == 1) {
                 return c.getCPF();
             } else if (columnIndex == 2) {

@@ -16,13 +16,14 @@ public class AddQuarto extends javax.swing.JFrame {
 
     private final ctrQuarto controle;
     private final QuartosView.QuartoAdapter adapter;
-    
+
     /**
      * Creates new form AddQuarto
      */
     public AddQuarto(ctrQuarto controle, QuartosView.QuartoAdapter adapter) {
+        super("Registrar um quarto");
         initComponents();
-        
+
         //define que a janela iniciará centralizado.
         setLocationRelativeTo(null);
 
@@ -118,22 +119,18 @@ public class AddQuarto extends javax.swing.JFrame {
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         if (txtNumero.getText().length() > 0
-                && txtPreco.getText().length() > 0 ) {
+                && txtPreco.getText().length() > 0) {
 
-            //try{
             //Adiciona um novo cliente.
-                controle.AddQuarto(
-                        new Quarto(Integer.parseInt(txtNumero.getText()),
-                                Double.parseDouble(txtPreco.getText().replace(",", ".")),
-                                txtDescricao.getText()));
-                //Atualiza a tabela.                
-                adapter.fireTableDataChanged();
-                //Fecha a janela.
-                setVisible(false);
-                dispose(); 
-            //}catch( Exception e ){
-                
-            //}
+            controle.AddQuarto(
+                    new Quarto(Integer.parseInt(txtNumero.getText()),
+                            Double.parseDouble(txtPreco.getText().replace(",", ".")),
+                            txtDescricao.getText()));
+            //Atualiza a tabela.                
+            adapter.fireTableDataChanged();
+            //Fecha a janela.
+            setVisible(false);
+            dispose();            
         }
     }//GEN-LAST:event_btnOKActionPerformed
 

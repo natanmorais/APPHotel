@@ -69,6 +69,17 @@ public class ctrCliente {
         }
     }
     
+    public boolean RemoverCliente( String CPF ){
+        for(Cliente c: listaClientes){
+            if(c.getCPF().equals(CPF)){
+                listaClientes.remove(c);
+                SalvaCliente();
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public void CadastrarCliente(Cliente c){
         BuscaClientes();
         listaClientes.add(c);
