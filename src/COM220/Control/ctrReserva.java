@@ -113,11 +113,18 @@ public class ctrReserva {
     }
 
     public boolean RemoverReserva(long codigo) {
+        ctrPagamento ctrPg = new ctrPagamento();
         for (Reserva r : listaReservas) {
             if (r.getCodigo() == codigo) {
                 listaReservas.remove(r);
                 SalvaReserva();
-                return true;
+                for(Pagamento p: ctrPg.listarTodosPagamentos()){
+                    if(r.getCodigo()==p.getReservaEfetuada().getCodigo()){
+                        ctrPg.listaPagamentos.remove(p);
+                        ctrPg.SalvaPagamento();
+                        return true;
+                    }
+                }
             }
         }
         return false;
