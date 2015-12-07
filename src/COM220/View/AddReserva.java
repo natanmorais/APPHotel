@@ -6,9 +6,11 @@
 package COM220.View;
 
 import COM220.Control.ctrCliente;
+import COM220.Control.ctrPagamento;
 import COM220.Control.ctrQuarto;
 import COM220.Control.ctrReserva;
 import COM220.Model.Cliente;
+import COM220.Model.Pagamento;
 import COM220.Model.Quarto;
 import COM220.Model.Reserva;
 import java.util.Calendar;
@@ -188,6 +190,7 @@ public class AddReserva extends javax.swing.JFrame implements ChangeListener {
                 (double) sDesconto.getValue());
         r.setQuartos(lstQuartos.getSelectedValuesList());
         controle.fazerReserva(r);
+        new ctrPagamento().RegistrarPagamento(new Pagamento(0,r));
         //Atualiza a tabela.
         adapter.fireTableDataChanged();
         //Fecha a janela.

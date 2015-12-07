@@ -23,7 +23,6 @@ import java.util.Iterator;
 public class ctrPagamento {
 
     //Criar atributo para ter o view do Pagamento.
-
     ArrayList<Pagamento> listaPagamentos = new ArrayList<>();
 
     public void SalvaPagamento() {
@@ -74,15 +73,15 @@ public class ctrPagamento {
 
     public boolean RegistrarPagamento(Pagamento p) {
         BuscaPagamentos();
-        
-        for( Iterator<Pagamento> it = listaPagamentos.iterator(); it.hasNext(); ){
+
+        for (Iterator<Pagamento> it = listaPagamentos.iterator(); it.hasNext();) {
             Pagamento pAux = it.next();
             if (p.getReservaEfetuada().getCodigo() == pAux.getReservaEfetuada().getCodigo()) {
                 p.setValor(p.getValor() + pAux.getValor());
                 it.remove();
             }
         }
-                
+
         Calendar dataEnt = Calendar.getInstance(),
                 dataSai = Calendar.getInstance();
         dataEnt.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
@@ -94,11 +93,16 @@ public class ctrPagamento {
         if (p.getValor() > Preço) {
             return false;
         } else if (p.getValor() == Preço) {
-            p.setSituacao(Constants.GARANTIDO);
+            p.setSituacao(Constants.PAGO);
         } else if (p.getValor() >= Preço / (dataSai.get(Calendar.DAY_OF_YEAR) - dataEnt.get(Calendar.DAY_OF_YEAR))) {
             p.setSituacao(Constants.GARANTIDO);
         } else {
-            p.setSituacao(Constants.NAO_GARANTIDO);
+            if (p.getValor() > 0) {
+                p.setSituacao(Constants.NAO_GARANTIDO);
+            }
+            else {
+                p.setSituacao(Constants.NAO_PAGO);
+            }
         }
         listaPagamentos.add(p);
         SalvaPagamento();

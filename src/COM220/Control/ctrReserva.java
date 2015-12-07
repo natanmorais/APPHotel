@@ -113,11 +113,18 @@ public class ctrReserva {
     }
 
     public boolean RemoverReserva(long codigo) {
+        ctrPagamento ctrPg = new ctrPagamento();
         for (Reserva r : listaReservas) {
             if (r.getCodigo() == codigo) {
                 listaReservas.remove(r);
                 SalvaReserva();
-                return true;
+                for(Pagamento p: ctrPg.listarTodosPagamentos()){
+                    if(r.getCodigo()==p.getReservaEfetuada().getCodigo()){
+                        ctrPg.listaPagamentos.remove(p);
+                        ctrPg.SalvaPagamento();
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -146,6 +153,7 @@ public class ctrReserva {
 
     public ArrayList<Reserva> relatorioCancelados() {
         ArrayList<Reserva> canc = new ArrayList<>();
+        controlP.BuscaPagamentos();
         BuscaReservas();
         for (Reserva r : listaReservas) {
             if (r.getCancelada()) {
@@ -157,6 +165,7 @@ public class ctrReserva {
 
     public ArrayList<Reserva> relatorioNaoPagos() {
         ArrayList<Reserva> naoP = new ArrayList<>();
+        controlP.BuscaPagamentos();
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
             if (p.getSituacao() == Constants.NAO_PAGO) {
@@ -169,11 +178,12 @@ public class ctrReserva {
     public ArrayList<Reserva> relatorioASerPagoHoje() {
         ArrayList<Reserva> naoP = new ArrayList<>();
         Calendar hoje = Calendar.getInstance(), dia = Calendar.getInstance();
+        controlP.BuscaPagamentos();
         BuscaReservas();
         for (Pagamento p : controlP.listaPagamentos) {
-            if (p.getSituacao() == Constants.NAO_PAGO) {
+            if (p.getSituacao() == Constants.NAO_PAGO || p.getSituacao() == Constants.NAO_GARANTIDO) {
                 dia.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
-                if ((dia.get(Calendar.DAY_OF_YEAR) + 3) == hoje.get(Calendar.DAY_OF_YEAR)) {
+                if ((dia.get(Calendar.DAY_OF_YEAR)) == hoje.get(Calendar.DAY_OF_YEAR) + 3) {
                     naoP.add(p.getReservaEfetuada());
                 }
             }

@@ -12,6 +12,7 @@ import COM220.Model.Reserva;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 /**
  *
@@ -115,8 +116,10 @@ public class AddPagamento extends javax.swing.JFrame {
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         float valor = Float.parseFloat(txtValor.getText().replace(",", "."));
         if (cbReservas.getSelectedIndex() != -1 && valor >= 0) {
-            controle.RegistrarPagamento(
-                    new Pagamento(valor, (Reserva) cbReservas.getSelectedItem()));
+            if(!controle.RegistrarPagamento(
+                    new Pagamento(valor, (Reserva) cbReservas.getSelectedItem()))){
+                JOptionPane.showMessageDialog(null, "Você está tentando pagar mais do que o valor da reserva", "ERRO", ERROR_MESSAGE);
+            }
         }
         adapter.fireTableDataChanged();
         //Fecha a janela.

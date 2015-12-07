@@ -10,6 +10,7 @@ import COM220.Model.Reserva;
 import COM220.Utils.GerarRelatorio;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -134,16 +135,19 @@ public class GerarRelatorioView extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ctrReserva controle = new ctrReserva();
         relatorio.GerarHTMLESalvarEmArquivo(new Modelo(controle.relatorioCancelados()));
+        JOptionPane.showMessageDialog(null, "Relatório salvo com sucesso!");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         ctrReserva controle = new ctrReserva();
         relatorio.GerarHTMLESalvarEmArquivo(new Modelo(controle.relatorioNaoPagos()));
+        JOptionPane.showMessageDialog(null, "Relatório salvo com sucesso!");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         ctrReserva controle = new ctrReserva();
         relatorio.GerarHTMLESalvarEmArquivo(new Modelo(controle.relatorioASerPagoHoje()));
+        JOptionPane.showMessageDialog(null, "Relatório salvo com sucesso!");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -151,6 +155,7 @@ public class GerarRelatorioView extends javax.swing.JFrame {
         relatorio.GerarHTMLESalvarEmArquivo(new Modelo(controle.relatorioPeriodo(
                 ((Date) sDataInicial.getValue()).getTime(),
                 ((Date) sDataFinal.getValue()).getTime())));
+        JOptionPane.showMessageDialog(null, "Relatório salvo com sucesso!");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
