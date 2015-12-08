@@ -5,6 +5,8 @@
  */
 package COM220.View;
 
+import COM220.Control.ctrPagamento;
+
 /**
  *
  * @author tiago

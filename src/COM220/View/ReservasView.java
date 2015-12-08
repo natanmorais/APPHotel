@@ -5,6 +5,7 @@
  */
 package COM220.View;
 
+import COM220.Control.ctrPagamento;
 import COM220.Control.ctrReserva;
 import COM220.Model.Reserva;
 import java.util.Date;
@@ -29,6 +30,8 @@ public class ReservasView extends javax.swing.JFrame {
 
         adapter = new ReservasView.ReservaAdapter(controle);
         tbReservas.setModel(adapter);
+        
+        new ctrPagamento().passouDoPrazo();
         
         setVisible(true);
     }

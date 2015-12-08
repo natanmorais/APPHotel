@@ -7,6 +7,7 @@ package COM220.Control;
 
 import COM220.Model.Pagamento;
 import COM220.Model.Quarto;
+import COM220.Model.Reserva;
 import COM220.Utils.Constants;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -99,8 +100,7 @@ public class ctrPagamento {
         } else {
             if (p.getValor() > 0) {
                 p.setSituacao(Constants.NAO_GARANTIDO);
-            }
-            else {
+            } else {
                 p.setSituacao(Constants.NAO_PAGO);
             }
         }
@@ -121,6 +121,27 @@ public class ctrPagamento {
     public ArrayList<Pagamento> listarTodosPagamentos() {
         BuscaPagamentos();
         return listaPagamentos;
+    }
+
+    public void passouDoPrazo() {
+        BuscaPagamentos();
+        ctrReserva controlR = new ctrReserva();
+        ArrayList <Reserva> aux = new ArrayList<>();
+        Calendar dia = Calendar.getInstance(), hoje = Calendar.getInstance();
+        for (Pagamento p : listaPagamentos) {
+            dia.setTimeInMillis(p.getReservaEfetuada().getDataEntrada());
+            if (dia.get(Calendar.DAY_OF_YEAR) < hoje.get(Calendar.DAY_OF_YEAR) + 3 && p.getSituacao() <= Constants.NAO_GARANTIDO) {
+                aux.add(p.getReservaEfetuada());
+            }
+        }
+        for(Reserva r: controlR.listarTodasReservas()){
+            for(Reserva rAux: aux){
+                if(r.getCodigo() == rAux.getCodigo()){
+                    r.setCancelada(true);
+                }
+            }
+        }
+        controlR.SalvaReserva();
     }
 
 }
